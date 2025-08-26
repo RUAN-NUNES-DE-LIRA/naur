@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-eta)6z9&-2kzd=@hzp828h6sojash=9w7*u^l48a=ir_!p@ind'
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+APPEND_SLASH = False
+
+BASE_URL = 'http://127.0.0.1:8000'
+FRONTEND_BASE_URL = 'http://127.0.0.1:3000'
 
 ALLOWED_HOSTS = []
 
@@ -75,8 +81,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),                 
+        'USER': config('DB_USER', default='postgres'), 
+        'PASSWORD': config('DB_PASSWORD'),          
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432', cast=int)
     }
 }
 
@@ -103,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -121,3 +131,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Rest Framework Settings
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'core.utils.custom_exception.custom_exception_handler',
+    'DEFAULT_RENDERER_CLASSES': [
+        'core.utils.renderers.CustomJSONRenderer'
+    ]
+}
