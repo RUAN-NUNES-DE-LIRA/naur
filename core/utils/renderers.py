@@ -8,10 +8,10 @@ class CustomJSONRenderer(JSONRenderer):
         if response is not None and response.status_code >= 400:
             success = False
 
-            response_data = {
-                'success': success,
-                'data': data if data is not None else {}
-            }
+        response_data = {
+            'success': success,
+            'data': data if data is not None else {}
+        }
 
         if "detail" in data:
             response_data['detail'] = data['detail']
