@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -84,10 +85,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),                 
-        'USER': config('DB_USER', default='postgres'), 
+        'USER': config('DB_USER'), 
         'PASSWORD': config('DB_PASSWORD'),          
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432', cast=int)
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int)
     }
 }
 
@@ -109,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 
 # Internationalization
