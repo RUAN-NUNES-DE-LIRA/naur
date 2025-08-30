@@ -120,7 +120,8 @@ class Order(models.Model):
         on_delete=models.CASCADE
     )
     paid = models.BooleanField(default=False)
-    external_payment_id = models.CharField
+    external_payment_id = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 
