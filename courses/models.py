@@ -68,7 +68,7 @@ class Lesson(models.Model):
 )
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
-    url_video = models.URLField(blank=True, null=True)
+    video_url = models.URLField(blank=True, null=True)
     time-estimate = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
